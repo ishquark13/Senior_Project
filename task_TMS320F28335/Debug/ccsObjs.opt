@@ -1,1 +1,0 @@
-"./mutex.obj" "../TMS320F28335.cmd" -l"configPkg/linker.cmd" -llibc.a 
