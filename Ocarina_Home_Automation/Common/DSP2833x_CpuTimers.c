@@ -23,8 +23,8 @@
 struct CPUTIMER_VARS CpuTimer0;
 
 // When using DSP BIOS & other RTOS, comment out CPU Timer 2 code.
-struct CPUTIMER_VARS CpuTimer1;
-struct CPUTIMER_VARS CpuTimer2;
+//struct CPUTIMER_VARS CpuTimer1;
+//struct CPUTIMER_VARS CpuTimer2;
 
 //---------------------------------------------------------------------------
 // InitCpuTimers:
@@ -54,19 +54,19 @@ void InitCpuTimers(void)
 // DSP-BIOS or another realtime OS.
 
     // Initialize address pointers to respective timer registers:
-    CpuTimer1.RegsAddr = &CpuTimer1Regs;
+    //CpuTimer1.RegsAddr = &CpuTimer1Regs;
     //CpuTimer2.RegsAddr = &CpuTimer2Regs;
     // Initialize timer period to maximum:
-    CpuTimer1Regs.PRD.all  = 0xFFFFFFFF;
+    //CpuTimer1Regs.PRD.all  = 0xFFFFFFFF;
     //CpuTimer2Regs.PRD.all  = 0xFFFFFFFF;
     // Make sure timers are stopped:
-    CpuTimer1Regs.TCR.bit.TSS = 1;
+    //CpuTimer1Regs.TCR.bit.TSS = 1;
     //CpuTimer2Regs.TCR.bit.TSS = 1;
     // Reload all counter register with period value:
-    CpuTimer1Regs.TCR.bit.TRB = 1;
+    //CpuTimer1Regs.TCR.bit.TRB = 1;
     //CpuTimer2Regs.TCR.bit.TRB = 1;
     // Reset interrupt counters:
-    CpuTimer1.InterruptCount = 0;
+    //CpuTimer1.InterruptCount = 0;
     //CpuTimer2.InterruptCount = 0;
 
 }

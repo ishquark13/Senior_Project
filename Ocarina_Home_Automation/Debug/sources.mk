@@ -125,5 +125,5 @@ S64_DEPS__QUOTED :=
 SUBDIRS := \
 . \
 Common \
-EEL4511\ Libraries \
+EEL4511\ Libraries/src \
 
