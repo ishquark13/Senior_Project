@@ -52,6 +52,11 @@
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.GEN_FUNC_SUBSECTIONS.1478833055" name="Place each function in a separate subsection (--gen_func_subsections, -mo)" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.GEN_FUNC_SUBSECTIONS" value="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.GEN_FUNC_SUBSECTIONS.on" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.C_DIALECT.823830400" name="C Dialect" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.C_DIALECT" value="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.C_DIALECT.C99" valueType="enumerated"/>
+								<option id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.ADVICE__PERFORMANCE.792632859" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.ADVICE__PERFORMANCE" value="--advice:performance=all" valueType="string"/>
+								<option id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.PRINTF_SUPPORT.1228324839" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.PRINTF_SUPPORT" value="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.PRINTF_SUPPORT.full" valueType="enumerated"/>
+								<option id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.OTHER_FLAGS.327313706" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compilerID.OTHER_FLAGS" valueType="stringList">
+									<listOptionValue builtIn="false" value=""/>
+								</option>
 								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__C_SRCS.64214274" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__C_SRCS"/>
 								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__CPP_SRCS.554098702" name="C++ Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__CPP_SRCS"/>
 								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__ASM_SRCS.616488176" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_15.12.compiler.inputType__ASM_SRCS"/>

@@ -107,8 +107,8 @@ void DMACH1ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH1.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH1.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx1 = 1;              // Enable DMA CH1 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx1 = 1;              // Enable DMA CH1 interrupt in PIE
 
 	EDIS;
 }
@@ -198,8 +198,8 @@ void DMACH2ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH2.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH2.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx2 = 1;              // Enable DMA CH2 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx2 = 1;              // Enable DMA CH2 interrupt in PIE
 
 	EDIS;
 }
@@ -293,8 +293,8 @@ void DMACH3ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH3.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH3.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx3 = 1;              // Enable DMA CH3 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx3 = 1;              // Enable DMA CH3 interrupt in PIE
 
 	EDIS;
 }
@@ -385,8 +385,8 @@ void DMACH4ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH4.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH4.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx4 = 1;              // Enable DMA CH4 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx4 = 1;              // Enable DMA CH4 interrupt in PIE
 
 	EDIS;
 }
@@ -480,8 +480,8 @@ void DMACH5ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH5.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH5.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx5 = 1;              // Enable DMA CH5 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx5 = 1;              // Enable DMA CH5 interrupt in PIE
 
 	EDIS;
 }
@@ -573,8 +573,8 @@ void DMACH6ModeConfig(Uint16 persel, Uint16 perinte, Uint16 oneshot, Uint16 cont
 	DmaRegs.CH6.CONTROL.bit.SYNCCLR = 1;    		// Clear any spurious sync flags
 	DmaRegs.CH6.CONTROL.bit.ERRCLR = 1; 	     	// Clear any spurious sync error flags
 
-	// Initialize PIE vector for CPU interrupt:
-	PieCtrlRegs.PIEIER7.bit.INTx6 = 1;              // Enable DMA CH6 interrupt in PIE
+	// Initialize PIE vector for CPU interrupt: TURNED OFF BECAUSE OF SYS/BIOS!!!!!!
+	//PieCtrlRegs.PIEIER7.bit.INTx6 = 1;              // Enable DMA CH6 interrupt in PIE
 
 	EDIS;
 }

@@ -168,7 +168,7 @@ all: Ocarina_Home_Automation.out
 Ocarina_Home_Automation.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 -g --c99 --display_error_number --diag_warning=225 --diag_warning=255 --diag_wrap=off --gen_func_subsections=on -z -m"Ocarina_Home_Automation.map" --stack_size=0x300 --warn_sections -i"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="Ocarina_Home_Automation_linkInfo.xml" --rom_model -o "Ocarina_Home_Automation.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --advice:performance=all -g --c99 --display_error_number --diag_warning=225 --diag_warning=255 --diag_wrap=off --gen_func_subsections=on --printf_support=full -z -m"Ocarina_Home_Automation.map" --stack_size=0x300 --warn_sections -i"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="Ocarina_Home_Automation_linkInfo.xml" --rom_model -o "Ocarina_Home_Automation.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

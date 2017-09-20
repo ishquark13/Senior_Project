@@ -31,13 +31,17 @@ void Init_LCD(void)
 	EALLOW;
 
 	LCD_command(0x33);
-	DELAY_US(5000);
+	//DELAY_US(5000);
+	for(int i = 0; i<5000; i++);
 	LCD_command(0x32);
-	DELAY_US(5000);
+	//DELAY_US(5000);
+	for(int i = 0; i<5000; i++);
 	LCD_command(0x28);
-	DELAY_US(5000);
+	//DELAY_US(5000);
+	for(int i = 0; i<5000; i++);
 	LCD_command(0x0F);
-	DELAY_US(5000);
+	//DELAY_US(5000);
+	for(int i = 0; i<5000; i++);
 	LCD_command(0x01);
 	EDIS;
 

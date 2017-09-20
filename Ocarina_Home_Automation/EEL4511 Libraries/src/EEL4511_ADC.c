@@ -49,13 +49,17 @@ void Init_McBSPb_ADC(void)
 	//Step 4. Enable the sample rate generator.
 	McbspbRegs.SPCR2.bit.GRST   = 1;
 
-	DELAY_US(100);
+	//TODO: Workaround these offending delays
+	//DELAY_US(100);
+	for(int i = 0; i < 1000 ; i++);
 
 	//Step 5. Enable the transmitter and receiver.
 	McbspbRegs.SPCR2.bit.XRST 	= 1;
 	McbspbRegs.SPCR1.bit.RRST   = 1;
 
-	DELAY_US(100);
+	//TODO: Workaround these offending delays
+	//DELAY_US(100);
+	for(int i = 0; i < 1000 ; i++);
 
 	McbspbRegs.SPCR2.bit.FRST = 1;
 

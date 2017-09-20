@@ -74,7 +74,9 @@ PAGE 1 :   /* Data Memory */
 
     M01SARAM    : origin = 0x000000, length = 0x000800     /* on-chip RAM block M0, M1 */
     PIEVECT     : origin = 0xD00,    length = 0x100
-    L07SARAM    : origin = 0x008000, length = 0x008000     /* on-chip RAM block L0-L7 */
+    L06SARAM    : origin = 0x008000, length = 0x006000     /* on-chip RAM block L0-L6 */
+    BUFFERRAM    : origin = 0x00E000, length = 0x002000     /* on-chip RAM block L0-L6 */
+
 }
 
 /*
@@ -95,7 +97,7 @@ SECTIONS
     .text               : > FLASH       PAGE = 0
     codestart           : > BEGIN       PAGE = 0
     ramfuncs            : LOAD = FLASH      PAGE = 0,
-                          RUN  = L07SARAM   PAGE = 1,
+                          RUN  = L06SARAM   PAGE = 1,
                           LOAD_START(_RamfuncsLoadStart),
                           LOAD_SIZE(_RamfuncsLoadSize),
                           LOAD_END(_RamfuncsLoadEnd),
@@ -105,10 +107,11 @@ SECTIONS
     csm_rsvd            : > CSM_RSVD    PAGE = 0
 
     /* Allocate uninitalized data sections: */
-    .stack              : > M01SARAM | L07SARAM     PAGE = 1
-    .ebss               : > M01SARAM | L07SARAM     PAGE = 1
-    .esysmem            : > L07SARAM | M01SARAM     PAGE = 1
-    .cio                : > L07SARAM | M01SARAM     PAGE = 1
+    .stack              : > M01SARAM | L06SARAM     PAGE = 1
+    .ebss               : > M01SARAM | L06SARAM     PAGE = 1
+    .esysmem            : > L06SARAM | M01SARAM     PAGE = 1
+    .cio                : > L06SARAM | M01SARAM     PAGE = 1
+    PINGPONG            : > BUFFERRAM               PAGE = 1
 
     /* Initalized sections go in Flash */
     /* For SDFlash to program these, they must be allocated to page 0 */
@@ -119,7 +122,7 @@ SECTIONS
 #ifdef __TI_COMPILER_VERSION
 #if __TI_COMPILER_VERSION >= 15009000
     .TI.ramfunc         : {} LOAD = FLASH    PAGE = 0,
-                             RUN  = L07SARAM PAGE = 1,
+                             RUN  = L06SARAM PAGE = 1,
                              table(BINIT)
 #endif
 #endif
