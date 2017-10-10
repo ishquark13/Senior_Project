@@ -1,0 +1,16 @@
+Added Component: Designator=C50(3528)
+Added Component: Designator=C51(0805)
+Added Component: Designator=C52(0805)
+Added Component: Designator=FB4(CR2012-0805)
+Added Pin To Net: NetName=+A5.0V Pin=C50-1
+Added Pin To Net: NetName=ADCINA4 Pin=C50-2
+Added Pin To Net: NetName=ADCINA4 Pin=C51-1
+Added Pin To Net: NetName=+A5.0V Pin=C51-2
+Added Pin To Net: NetName=ADCINA4 Pin=C52-1
+Added Pin To Net: NetName=+A5.0V Pin=C52-2
+Added Pin To Net: NetName=+D5.0V Pin=FB4-1
+Added Pin To Net: NetName=+A5.0V Pin=FB4-2
+Added Member To Class: ClassName=DSP_Power Member=Component C50 10uF
+Added Member To Class: ClassName=DSP_Power Member=Component C51 Cap Semi
+Added Member To Class: ClassName=DSP_Power Member=Component C52 Cap Semi
+Added Member To Class: ClassName=DSP_Power Member=Component FB4 Ferrite_Bead
