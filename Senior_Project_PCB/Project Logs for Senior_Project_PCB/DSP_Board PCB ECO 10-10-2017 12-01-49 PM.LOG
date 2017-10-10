@@ -1,0 +1,27 @@
+Change Component DesignItemId : Designator=C31 Old DesignItemId=Cap2 New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C32 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C33 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C34 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C35 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C36 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C37 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C38 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component DesignItemId : Designator=C39 Old DesignItemId=Cap New DesignItemId=Cap Semi
+Change Component Footprint: Designator=C31 Old Footprint=CAPR5-4X5 New Footprint=0805
+Change Component Footprint: Designator=C32 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C33 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C34 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C35 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C36 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C37 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C38 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Footprint: Designator=C39 Old Footprint=RAD-0.3 New Footprint=0805
+Change Component Comment : Designator=C32 Old Comment=10nF New Comment=Cap Semi
+Change Component Comment : Designator=C34 Old Comment=10nF New Comment=Cap Semi
+Change Component Comment : Designator=C36 Old Comment=10nF New Comment=Cap Semi
+Change Component Comment : Designator=C38 Old Comment=10nF New Comment=Cap Semi
+Change Component Comment : Designator=C31 Old Comment=Cap2 New Comment=Cap Semi
+Change Component Comment : Designator=C33 Old Comment=Cap New Comment=Cap Semi
+Change Component Comment : Designator=C35 Old Comment=Cap New Comment=Cap Semi
+Change Component Comment : Designator=C37 Old Comment=Cap New Comment=Cap Semi
+Change Component Comment : Designator=C39 Old Comment=Cap New Comment=Cap Semi
