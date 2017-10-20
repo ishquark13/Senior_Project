@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=UART_TXD Pin=U1-66
+Removed Pin From Net: NetName=UART_RXD Pin=U1-67
+Removed Pin From Net: NetName=GPIO62 Pin=U1-113
+Removed Pin From Net: NetName=GPIO63 Pin=U1-114
+Added Component: Designator=P6(HDR1X4)
+Added Pin To Net: NetName=+D5.0V Pin=P6-1
+Added Pin To Net: NetName=+D5.0V Pin=P6-2
+Added Pin To Net: NetName=+D5.0V Pin=P6-3
+Added Pin To Net: NetName=+D5.0V Pin=P6-4
+Added Pin To Net: NetName=GPIO63 Pin=U1-66
+Added Pin To Net: NetName=GPIO62 Pin=U1-67
+Added Pin To Net: NetName=UART_RXD Pin=U1-113
+Added Pin To Net: NetName=UART_TXD Pin=U1-114
+Change Net Name : Old Net Name=GPIO62 New Net Name=GPIO23
+Change Net Name : Old Net Name=GPIO63 New Net Name=GPIO22
+Added Member To Class: ClassName=DSP_Board_Headers Member=Component P6 Header 4
