@@ -1,0 +1,11 @@
+Change Component Footprint: Designator=U2 Old Footprint=SO08 New Footprint=DIP-8
+Change Component Footprint: Designator=U3 Old Footprint=SO08 New Footprint=DIP-8
+Added Member To Class: ClassName=Audio_ADC Member=Component C35 Cap Semi
+Added Member To Class: ClassName=Audio_ADC Member=Component C36 Cap Semi
+Added Member To Class: ClassName=Audio_ADC Member=Component C37 Cap Semi
+Added Member To Class: ClassName=Audio_ADC Member=Component R17 Res
+Added Member To Class: ClassName=Audio_ADC Member=Component R18 Res
+Added Member To Class: ClassName=Audio_ADC Member=Component R19 Res
+Added Member To Class: ClassName=Audio_ADC Member=Component R20 Res
+Added Member To Class: ClassName=Audio_ADC Member=Component TL07 BPFS1
+Added Member To Class: ClassName=Audio_ADC Member=Component TRS 3.5mm jack GM
