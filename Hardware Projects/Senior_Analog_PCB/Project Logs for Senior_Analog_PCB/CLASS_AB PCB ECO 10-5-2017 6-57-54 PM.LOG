@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=NetC2_1 Pin=R3-1
+Removed Member From Class: ClassName=CLASS_AB Member=R3
+Change Component Comment : Designator=Q4 Old Comment=2N3906 New Comment=2N2907
+Added Pin To Net: NetName=NetC2_1 Pin=R2-1
+Added Room: Name=CLASS_AB

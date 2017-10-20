@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Senior_Analog_PCB.PrjPcb]
+   Generated File[CLASS_AB.TXT]
+   Generated File[CLASS_AB.LDP]
+   Generated File[CLASS_AB.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 11:35:25 PM On 10/9/2017

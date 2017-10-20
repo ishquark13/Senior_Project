@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=NetC2_2 Pin=POT1-2
+Removed Pin From Net: NetName=NetC2_1 Pin=POT1-3
+Removed Member From Class: ClassName=CLASS_AB Member=POT1
+Added Component: Designator=R4(AXIAL-0.3)
+Added Pin To Net: NetName=NetC2_2 Pin=R4-1
+Added Pin To Net: NetName=NetC2_1 Pin=R4-2
+Added Member To Class: ClassName=CLASS_AB Member=Component R4 Res4
+Added Room: Name=CLASS_AB

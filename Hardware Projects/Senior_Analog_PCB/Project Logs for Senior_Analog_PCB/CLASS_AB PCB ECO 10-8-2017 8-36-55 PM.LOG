@@ -1,0 +1,6 @@
+Added Component: Designator=R12(AXIAL-0.3)
+Added Pin To Net: NetName=NetC1_1 Pin=R12-1
+Added Pin To Net: NetName=GND Pin=R12-2
+Change Net Name : Old Net Name=+5 New Net Name=VCC
+Added Member To Class: ClassName=CLASS_AB Member=Component R12 Res2
+Added Room: Name=CLASS_AB
