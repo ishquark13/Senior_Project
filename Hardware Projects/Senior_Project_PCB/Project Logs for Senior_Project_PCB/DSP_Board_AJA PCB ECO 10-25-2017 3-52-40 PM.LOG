@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=UART_RXD Pin=P?-2
+Removed Pin From Net: NetName=UART_TXD Pin=P?-7
+Change Component Designator: OldDesignator=P? NewDesignator=P3
+Change Component Designator: OldDesignator=S? NewDesignator=S2
+Added Pin To Net: NetName=UART_TXD Pin=P3-2
+Added Pin To Net: NetName=UART_RXD Pin=P3-7
+Change Net Name : Old Net Name=NetP?_3 New Net Name=NetP3_3
+Change Net Name : Old Net Name=NetP?_5 New Net Name=NetP3_5
+Added Member To Class: ClassName=DSP_Board_Headers Member=Component P3 Header 4X2
+Added Rule: Name=Schematic Width Constraint_1
+Added Rule: Name=Schematic Width Constraint_2
+Added Rule: Name=Schematic Width Constraint_3
+Added Rule: Name=Schematic Width Constraint_4
+Added Rule: Name=Schematic Width Constraint_5
+Added Rule: Name=Schematic Width Constraint_6
+Added Rule: Name=Schematic Width Constraint_7

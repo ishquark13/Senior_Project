@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=TRSTn_DSP Pin=R29-1
+Removed Pin From Net: NetName=GND Pin=R29-2
+Removed Member From Class: ClassName=TMS320F28335_DSP Member=R29

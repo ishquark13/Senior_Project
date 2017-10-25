@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=AGND Pin=P8-1
+Removed Pin From Net: NetName=AGND Pin=P8-2
+Removed Pin From Net: NetName=AGND Pin=P8-3
+Removed Pin From Net: NetName=AGND Pin=P8-4
+Removed Member From Class: ClassName=DSP_Board_Headers Member=P8
+Added Room: Name=Audio_ADC
+Added Room: Name=DSP_Board_Headers
+Added Room: Name=DSP_Power
+Added Room: Name=TMS320F28335_DSP
