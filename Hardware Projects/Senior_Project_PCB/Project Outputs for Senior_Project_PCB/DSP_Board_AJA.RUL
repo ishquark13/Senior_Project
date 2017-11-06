@@ -1,13 +1,13 @@
 DRC Rules Export File for PCB: C:\Users\Adrian\Documents\GitHub\Senior_Project\Hardware Projects\Senior_Project_PCB\DSP_Board_AJA.PcbDoc
-RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
-RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=6.00
-RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
-RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
-RuleKind=Width|RuleName=Schematic Width Constraint|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_1|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_2|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_3|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_4|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_5|Scope=Board|Minimum=10.00
-RuleKind=Width|RuleName=Schematic Width Constraint_6|Scope=Board|Minimum=10.00
 RuleKind=Width|RuleName=Schematic Width Constraint_7|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_6|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_5|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_4|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_3|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_2|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint_1|Scope=Board|Minimum=10.00
+RuleKind=Width|RuleName=Schematic Width Constraint|Scope=Board|Minimum=10.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=6.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0

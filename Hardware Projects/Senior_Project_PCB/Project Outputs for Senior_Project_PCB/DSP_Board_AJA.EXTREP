@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------
-Gerber File Extension Report For: DSP_Board_AJA.GBR   10/25/2017  4:44:27 PM
+Gerber File Extension Report For: DSP_Board_AJA.GBR   10/25/2017  6:27:31 PM
 ------------------------------------------------------------------------------------------
 
 
@@ -16,6 +16,7 @@ Layer Extension     Layer Description
 .GBS                Bottom Solder                           
 .GBP                Bottom Paste                            
 .GBO                Bottom Overlay                          
+.GKO                Keep-Out Layer                          
 .GM13               Mechanical 13                           
 .GM15               Mechanical 15                           
 ------------------------------------------------------------------------------------------

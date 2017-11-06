@@ -20,22 +20,62 @@
 
 #include "EEL4511 Libraries/include/EEL4511.h"
 
+#include "fpu_rfft.h"
+
+/*
+ * ======= Defines =======
+ */
+#define RFFT_STAGES     10
+#define RFFT_SIZE       (1 << RFFT_STAGES) //512 FFT Bins
+#define F_PER_SAMPLE    6000.0L/(float)RFFT_SIZE  //Internal sampling rate is 6kHz
+#define FFT_THRESHOLD 30000    //TODO: EDIT THIS LATER
+#define D5 60
+#define F5 72
+#define A5 90
+#define B5 101
+#define C6 107
+#define D6 120
+
 /*
  * ======== Pragmas =======
  */
-
 #pragma DATA_SECTION( gRawADCBuffer , "PINGPONG" )
 #pragma DATA_SECTION( gAudioBuffer , "PINGPONG" )
 #pragma DATA_ALIGN( gRawADCBuffer, 2048 )
+
+#pragma DATA_SECTION( SongofTime , ".econst" )
+#pragma DATA_SECTION( WindsRequiem , ".econst" )
+#pragma DATA_SECTION( SariasSong , ".econst" )
+#pragma DATA_SECTION( SongofStorms , ".econst" )
+#pragma DATA_SECTION( SongofPassing , ".econst" )
 
 
 /*
  * ======= Global Variables ========
  */
 volatile Uint32 gRawADCBuffer[BUFFER_SIZE] = {0}; //contains raw 32bit data from ADC->McBSPb via DMA (data is shifted left) (Initialized to zero)
-volatile Uint16 gAudioBuffer[BUFFER_SIZE] = {0};  //will contain correctly shifted ADC data after processing occurs (Initialized to zero)
-volatile Uint32 gGarbage = 0x0BADFADE;
+volatile float gAudioBuffer[BUFFER_SIZE] = {0};  //will contain correctly shifted ADC data after processing occurs (Initialized to zero)
+const Uint32 gGarbage = 0x0BADFADE;
+volatile Uint16 gNoteDetected = 0;
 volatile Uint16 hwicount = 0;
+RFFT_F32_STRUCT rfft;
+float RFFToutBuff[RFFT_SIZE];                   //Calculated FFT result
+float RFFTF32Coef[RFFT_SIZE];                   //Coefficient table buffer
+float RFFTmagBuff[RFFT_SIZE/2+1];               //Magnitude of frequency spectrum
+struct FLAGS_STRUCT
+{
+    enum SwapSignal{READY, BLOCKED}BufferSwapSignal;
+    enum NoteDetected{SILENCE, DETECTED}soundFlag;
+    enum RepeatNote{NEW,SAME}noteFlag;
+}gFlags;
+
+const Uint16 SongofTime[6] = {A5, D5, F5, A5, D5, F5};
+const Uint16 WindsRequiem[6] = {C6, D5, A5 , C6, D5, A5};
+const Uint16 SariasSong[6] = {F5, A5, B5 , F5, A5, B5};
+const Uint16 SongofStorms[6] = {D5, F5, D6 , D5, F5, D6};
+const Uint16 SongofPassing[6] = {A5, F5, D6 , A5, F5, D6};
+
+volatile Uint16 noteBuffer[6]= {0};
 
 /*
  *  ======= Function Prototypes =======
@@ -53,8 +93,12 @@ void BufferSwapPostFxn_HWI(void)
 {
     //TODO: Check BufferSwapStatus flag and Post Semaphore to BufferSwapFxn_SWI if necessary
     //System_flush();
-    hwicount++;
-    Semaphore_post(BufferSwapSemaphore);
+    //hwicount++;
+
+    if ( gFlags.BufferSwapSignal == BLOCKED )
+        gFlags.BufferSwapSignal = READY;
+    else if (gFlags.BufferSwapSignal == READY)
+        Semaphore_post(BufferSwapSemaphore);
 
     //EALLOW;
     //PieCtrlRegs.PIEACK.all = PIEACK_GROUP7;
@@ -71,11 +115,7 @@ void BufferSwapTask(UArg a0, UArg a1)
     System_printf("enter BufferSwapTask()\n");
     System_flush();
 
-    char timerval[10];
-    Uint16 adcH;
-    Uint16 adcL;
-    Uint16 adc;
-    char adcval[10];
+    //char adcval[10];
 
     while(1)
     {
@@ -83,32 +123,156 @@ void BufferSwapTask(UArg a0, UArg a1)
         //pend on  semaphore post()
         Semaphore_pend(BufferSwapSemaphore, BIOS_WAIT_FOREVER);
 
+        System_printf("BufferSwapTask() running \n");
+        System_flush();
+
         Hwi_disable();
 
         for(int i = 0; i < BUFFER_SIZE; i++)
             {
-                gAudioBuffer[i] = (Uint16) ((gRawADCBuffer[i] >> 2) & 0xFFFF);
+                gAudioBuffer[i] = (float) ( (gRawADCBuffer[i] >> 2) & 0xFFFF);
             }
 
+        //TODO: Hamming Window
+
+        gFlags.BufferSwapSignal = BLOCKED;
+
         Hwi_enable();
+        Semaphore_post(BufferProcessingSemaphore);
 
-        EALLOW;
-        //sprintf(timerval, "%10u", (Uint16) CpuTimer0Regs.TIM.all);
-        adcH = McbspbRegs.DRR2.all;
-        adcL = McbspbRegs.DRR1.all;
+        //sprintf(adcval, "%10u", gAudioBuffer[512]);
+        //LCD_string(adcval)  ;
+        //LCD_home();
+        //System_flush();
 
-        adcH = (adcH << 14) & 0xC000 ;
-        adcL &= 0xFFFC;
-        adcL = adcL >> 2;
 
-        Uint16 adc = (adcH) | (adcL);
-        //adc =  ( (Uint16) McbspbRegs.DRR1.all ) >> 2 ;
-        sprintf(adcval, "%10u", gAudioBuffer[512]);
-        LCD_string(adcval)  ;
-        LCD_home();
-        //System_printf("Printed to LCD!!!\n");
+    }
+}
+
+/* ======= BufferProcessingTask ========
+ * This Function implements the FFT processing on the data Buffer and signals the BufferSwapTask to run when finished.
+ */
+
+void BufferProcessingTask(UArg a0, UArg a1)
+{
+
+    System_printf("enter BufferProcessingTask()\n");
+    System_flush();
+
+    //fft setup
+
+    char noteVal[10] = {0};
+    Uint16 fftMaxMagBin = 0;
+    float fftMaxMag = 0;
+    float fftMaxMagFreq = 0;
+
+
+
+    RFFT_f32_sincostable(&rfft);                    //Calculate twiddle factor
+
+    //Clean up output buffer
+    for (int i = 0; i < RFFT_SIZE; i++)
+       {
+            RFFToutBuff[i] = 0;
+       }
+
+   //Clean up magnitude buffer
+   for (int i = 0; i < RFFT_SIZE/2 + 1; i++)
+       {
+            RFFTmagBuff[i] = 0;
+       }
+
+
+   while(1)
+   {
+       Semaphore_pend(BufferProcessingSemaphore, BIOS_WAIT_FOREVER);
+       System_printf("BufferProcessingTask() running\n");
+       System_flush();
+
+       RFFT_f32u(&rfft);                 //calculate rfft on unaligned data (CHECK FOR OPTIMIZATION USING ALIGHT RFFT FUNCTION)
+       RFFT_f32_mag(&rfft);                 //calculate rfft
+
+       fftMaxMagBin = 1;
+       fftMaxMag = RFFTmagBuff[1];
+
+       for(int i=2;i<RFFT_SIZE/2;i++)
+       {
+               if(RFFTmagBuff[i] > fftMaxMag)
+               {
+                   fftMaxMagBin = i;
+                   fftMaxMag = RFFTmagBuff[i];
+               }
+       }
+
+       fftMaxMagFreq =  F_PER_SAMPLE * (float)fftMaxMagBin; //Convert normalized digital frequency to analog frequency
+
+       //TODO: what happens if same note is played for a long time????
+       if(fftMaxMag > FFT_THRESHOLD && gFlags.soundFlag==SILENCE)
+       {
+           gFlags.soundFlag = DETECTED;
+           gFlags.noteFlag = NEW;
+       }
+       else if(fftMaxMag > FFT_THRESHOLD && gFlags.soundFlag == DETECTED)
+       {
+           if(fftMaxMagBin == noteBuffer[0])
+               gFlags.noteFlag = SAME;
+           else
+               gFlags.noteFlag = NEW;
+
+       }
+       else if(fftMaxMag < FFT_THRESHOLD )
+       {
+           LCD_clear();
+           sprintf(noteVal, " No Note");
+           LCD_string(noteVal);
+           gFlags.soundFlag = SILENCE;
+       }
+
+       if(gFlags.noteFlag == NEW && gFlags.soundFlag == DETECTED)
+       {
+           noteBuffer[5] = noteBuffer[4];
+           noteBuffer[4] = noteBuffer[3];
+           noteBuffer[3] = noteBuffer[2];
+           noteBuffer[2] = noteBuffer[1];
+           noteBuffer[1] = noteBuffer[0];
+           noteBuffer[0] = fftMaxMagBin;
+           sprintf(noteVal, "%10f", fftMaxMagFreq);
+           LCD_home();
+           LCD_string(noteVal);
+           LCD_pos(1, 0);
+           sprintf(noteVal, "%3u ,", fftMaxMagBin);
+           LCD_string(noteVal);
+           sprintf(noteVal, " %3f", fftMaxMag);
+           LCD_string(noteVal);
+
+           Semaphore_post(SongCompareSemaphore);
+       }
+
+       if ( gFlags.BufferSwapSignal == BLOCKED )
+           gFlags.BufferSwapSignal = READY;
+       else if (gFlags.BufferSwapSignal == READY)
+           Semaphore_post(BufferSwapSemaphore);
+
+   }
+
+
+}
+
+void SongCompareTask(UArg a0, UArg a1)
+{
+    System_printf("Starting SongCompare Task\n");
+    System_flush();
+
+    while(1)
+    {
+        Semaphore_pend(SongCompareSemaphore,BIOS_WAIT_FOREVER);
+
+        System_printf("Running SongCompare Task\n");
+
         System_flush();
-        //StartDMACH2();
+
+
+        //TODO: Compare
 
 
     }
@@ -145,20 +309,30 @@ Int main()
     System_printf("enter timer init\n");
     System_flush();
 
-    //Initialize Timer0
+    //Initialize DMACH1&2
     Init_DMA();
 
     System_printf("enter DMA init\n");
     System_flush();
 
-    //Initialize DMACH1&2
+    //Initialize Timer0
     Init_Timer0();
+
+    //Init_FFT();
+    rfft.FFTSize   = RFFT_SIZE;                     //Real FFT size
+    rfft.FFTStages = RFFT_STAGES;                   //Real FFT stages
+    rfft.InBuf     = (float*)&gAudioBuffer[0];      //Input buffer
+    rfft.OutBuf    = &RFFToutBuff[0];               //Output buffer
+    rfft.MagBuf    = &RFFTmagBuff[0];               //Magnitude output buffer
+    rfft.CosSinBuf = &RFFTF32Coef[0];               //Twiddle factor
 
     System_printf("Finished inits, entering BIOS_start()\n");
     System_flush();
 
     //Hwi_enableInterrupt(38); //Timer0 Overflow
     //Hwi_enableInterrupt(74); //McBSPb Recieve Interrupt
+
+    gFlags.BufferSwapSignal = READY;
 
 
     BIOS_start();    /* does not return */
@@ -170,7 +344,7 @@ void Init_Timer0(void)
     EALLOW;
     InitCpuTimers();
 
-    ConfigCpuTimer( &CpuTimer0 , 150 , 100); //150MHz SYSCLK and 100us Timer Period (10k Sa/s)
+    ConfigCpuTimer( &CpuTimer0 , 150 , 166); //150MHz SYSCLK and 100us Timer Period (6k Sa/s)
 
     //Don't modify PIE for BIOS Applications
     //PieVectTable.XINT13 = <function_name>;  //THIS IS FOR TIMER1 ONLY!!!!

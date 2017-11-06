@@ -126,4 +126,5 @@ SUBDIRS := \
 . \
 Common \
 EEL4511\ Libraries/src \
+RFFT \
 

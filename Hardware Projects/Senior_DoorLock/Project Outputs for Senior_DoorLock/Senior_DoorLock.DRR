@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: Senior_DoorLock.PcbDoc   11/6/2017  11:23:08 AM
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : Senior_DoorLock.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      28mil (0.711mm)                                           Round             1         PTH        0.00inch (0.00mm)
+T2      32mil (0.8mm)                                             Round             2         PTH        0.20inch (5.00mm)
+T3      33mil (0.85mm)                                            Round             10        PTH        2.94inch (74.56mm)
+T4      35mil (0.9mm)                                             Round             15        PTH        5.92inch (150.45mm)
+T5      39mil (1mm)                                               Round             3         PTH        0.20inch (5.08mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              31
+
+Total Processing Time (hh:mm:ss) : 00:00:00

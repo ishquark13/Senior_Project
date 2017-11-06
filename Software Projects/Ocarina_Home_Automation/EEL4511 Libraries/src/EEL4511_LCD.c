@@ -97,3 +97,13 @@ void LCD_home(void)
 	LCD_command(0x02);
 	return;
 }
+
+void LCD_pos(short unsigned int row, short unsigned int col)
+{
+    short unsigned int x = 0x00;
+    if (row)
+        x = 0x40;
+    x |= (col & 0x0F);
+    x |= (1 << 7);
+    LCD_command(x);
+}

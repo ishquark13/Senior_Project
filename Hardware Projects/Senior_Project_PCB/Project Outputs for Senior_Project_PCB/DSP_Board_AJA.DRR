@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------------------------------------
-NCDrill File Report For: DSP_Board_AJA.PcbDoc   10/25/2017  4:45:30 PM
+NCDrill File Report For: DSP_Board_AJA.PcbDoc   10/25/2017  6:28:35 PM
 ----------------------------------------------------------------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -7,12 +7,12 @@ ASCII RoundHoles File : DSP_Board_AJA.TXT
 
 Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
 ----------------------------------------------------------------------------------------------------------------------------------
-T1      20mil (0.508mm)                                           Round             50        PTH        19.32inch (490.62mm)
+T1      20mil (0.508mm)                                           Round             50        PTH        19.28inch (489.74mm)
 T2      30mil (0.762mm)                                           Round             6         PTH        2.63inch (66.68mm)
-T3      35mil (0.9mm)                                             Round             92        PTH        26.00inch (660.30mm)
+T3      35mil (0.9mm)                                             Round             92        PTH        26.70inch (678.19mm)
 T4      67mil (1.689mm)                                           Round             5         PTH        0.56inch (14.14mm)
 T5      100mil (2.54mm)                                           Round             4         PTH        14.50inch (368.30mm)
 ----------------------------------------------------------------------------------------------------------------------------------
 Totals                                                                              157
 
-Total Processing Time (hh:mm:ss) : 00:00:00
+Total Processing Time (hh:mm:ss) : 00:00:01

@@ -50,8 +50,8 @@ Generating : Bottom Layer
 
 Used DCodes :
     D10
-    D11
-    D15
+    D12
+    D19
     D25
     D26
     D27
@@ -76,8 +76,8 @@ Generating : Bottom Pad Master
 
 Used DCodes :
     D10
-    D11
-    D15
+    D12
+    D19
     D27
     D28
     D29
@@ -221,8 +221,8 @@ Generating : Bottom Solder
 
 Used DCodes :
     D43
-    D44
-    D48
+    D45
+    D52
     D58
     D59
     D60
@@ -247,8 +247,8 @@ Generating : Bottom Paste
 
 Used DCodes :
     D10
-    D11
-    D15
+    D12
+    D19
 *************************************************************
 
 *************************************************************
@@ -256,6 +256,17 @@ Generating : Bottom Overlay
       File : DSP_Board_AJA.GBO
 
     Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D25
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : DSP_Board_AJA.GKO
+
+    Adding Layer      : Keep-Out Layer
 
 
 Used DCodes :
