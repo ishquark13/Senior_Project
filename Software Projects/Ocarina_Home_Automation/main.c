@@ -48,6 +48,7 @@
 #pragma DATA_SECTION( SariasSong , ".econst" )
 #pragma DATA_SECTION( SongofStorms , ".econst" )
 #pragma DATA_SECTION( SongofPassing , ".econst" )
+#pragma DATA_SECTION( hamming,".econst")
 
 
 /*
@@ -58,6 +59,8 @@ volatile float gAudioBuffer[BUFFER_SIZE] = {0};  //will contain correctly shifte
 const Uint32 gGarbage = 0x0BADFADE;
 volatile Uint16 gNoteDetected = 0;
 volatile Uint16 hwicount = 0;
+volatile float hamming[BUFFER_SIZE];            //added hamming window vector
+
 RFFT_F32_STRUCT rfft;
 float RFFToutBuff[RFFT_SIZE];                   //Calculated FFT result
 float RFFTF32Coef[RFFT_SIZE];                   //Coefficient table buffer
@@ -130,10 +133,10 @@ void BufferSwapTask(UArg a0, UArg a1)
 
         for(int i = 0; i < BUFFER_SIZE; i++)
             {
-                gAudioBuffer[i] = (float) ( (gRawADCBuffer[i] >> 2) & 0xFFFF);
+                gAudioBuffer[i] = (float) ( (gRawADCBuffer[i] >> 2) & 0xFFFF); /** hamming[i];*/
             }
 
-        //TODO: Hamming Window
+        //TODO: Uncomment Hamming Window
 
         gFlags.BufferSwapSignal = BLOCKED;
 
