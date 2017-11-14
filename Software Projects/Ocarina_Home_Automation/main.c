@@ -59,7 +59,7 @@ volatile float gAudioBuffer[BUFFER_SIZE] = {0};  //will contain correctly shifte
 const Uint32 gGarbage = 0x0BADFADE;
 volatile Uint16 gNoteDetected = 0;
 volatile Uint16 hwicount = 0;
-volatile float hamming[BUFFER_SIZE];            //added hamming window vector
+//volatile float hamming[BUFFER_SIZE];            //added hamming window vector
 
 RFFT_F32_STRUCT rfft;
 float RFFToutBuff[RFFT_SIZE];                   //Calculated FFT result
