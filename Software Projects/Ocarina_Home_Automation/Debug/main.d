@@ -10,6 +10,7 @@ main.obj: C:/ti/bios_6_45_01_29/packages/ti/targets/C28_float.h
 main.obj: C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdint.h
 main.obj: C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdio.h
 main.obj: C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdarg.h
+main.obj: C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/string.h
 main.obj: C:/ti/xdctools_3_32_01_22_core/packages/xdc/cfg/global.h
 main.obj: C:/Users/Adrian/workspace_v6_2/Ocarina_Home_Automation/Debug/configPkg/package/cfg/app_p28FP.h
 main.obj: C:/ti/bios_6_45_01_29/packages/ti/sysbios/knl/Semaphore.h
@@ -227,14 +228,15 @@ main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/
 main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_I2c_defines.h
 main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_DefaultIsr.h
 main.obj: ../EEL4511\ Libraries/include/EEL4511.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_ADC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_CircBuff.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_DAC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_GPIO.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_LCD.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_MISC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_SRAM.h
-main.obj: ../EEL4511\ Libraries/include/../include/OneToOneI2CDriver.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_ADC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_CircBuff.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_DAC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_GPIO.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_LCD.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_MISC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_SRAM.h
+main.obj: ../EEL4511\ Libraries/include/OneToOneI2CDriver.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511.h
 main.obj: C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_rfft.h
 main.obj: C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_types.h
 main.obj: C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/float.h
@@ -249,6 +251,7 @@ C:/ti/bios_6_45_01_29/packages/ti/targets/C28_float.h:
 C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdint.h: 
 C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/stdarg.h: 
+C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/string.h: 
 C:/ti/xdctools_3_32_01_22_core/packages/xdc/cfg/global.h: 
 C:/Users/Adrian/workspace_v6_2/Ocarina_Home_Automation/Debug/configPkg/package/cfg/app_p28FP.h: 
 C:/ti/bios_6_45_01_29/packages/ti/sysbios/knl/Semaphore.h: 
@@ -466,14 +469,15 @@ C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_D
 C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_I2c_defines.h: 
 C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_DefaultIsr.h: 
 ../EEL4511\ Libraries/include/EEL4511.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_ADC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_CircBuff.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_DAC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_GPIO.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_LCD.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_MISC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_SRAM.h: 
-../EEL4511\ Libraries/include/../include/OneToOneI2CDriver.h: 
+../EEL4511\ Libraries/include/EEL4511_ADC.h: 
+../EEL4511\ Libraries/include/EEL4511_CircBuff.h: 
+../EEL4511\ Libraries/include/EEL4511_DAC.h: 
+../EEL4511\ Libraries/include/EEL4511_GPIO.h: 
+../EEL4511\ Libraries/include/EEL4511_LCD.h: 
+../EEL4511\ Libraries/include/EEL4511_MISC.h: 
+../EEL4511\ Libraries/include/EEL4511_SRAM.h: 
+../EEL4511\ Libraries/include/OneToOneI2CDriver.h: 
+../EEL4511\ Libraries/include/EEL4511.h: 
 C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_rfft.h: 
 C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_types.h: 
 C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include/float.h: 
