@@ -1,4 +1,4 @@
-#include "USARTinit.h"
+#include "../include/USARTinit.h"
 #include <DSP28x_Project.h>
 
 extern volatile char rxBuffer[100];
