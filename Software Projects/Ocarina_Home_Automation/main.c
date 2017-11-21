@@ -6,6 +6,8 @@
 
 #include <stdio.h>
 
+#include <string.h>
+
 #include <xdc/cfg/global.h>
 
 #include <xdc/runtime/System.h>
@@ -20,6 +22,10 @@
 
 #include "EEL4511 Libraries/include/EEL4511.h"
 
+#include "EEL4511 Libraries/include/internalADC.h"
+
+#include "EEL4511 Libraries/include/actuatorControl.h"
+
 #include "fpu_rfft.h"
 
 /*
@@ -29,12 +35,12 @@
 #define RFFT_SIZE       (1 << RFFT_STAGES) //512 FFT Bins
 #define F_PER_SAMPLE    6000.0L/(float)RFFT_SIZE  //Internal sampling rate is 6kHz
 #define FFT_THRESHOLD 30000    //TODO: EDIT THIS LATER
-#define D5 60
-#define F5 72
-#define A5 90
-#define B5 101
-#define C6 107
-#define D6 120
+#define D5 100
+#define F5 119
+#define A5 150
+#define B5 168
+#define C6 178
+#define D6 201
 
 /*
  * ======== Pragmas =======
@@ -48,7 +54,7 @@
 #pragma DATA_SECTION( SariasSong , ".econst" )
 #pragma DATA_SECTION( SongofStorms , ".econst" )
 #pragma DATA_SECTION( SongofPassing , ".econst" )
-#pragma DATA_SECTION( hamming,".econst")
+//#pragma DATA_SECTION( hamming,".econst")
 
 
 /*
@@ -59,7 +65,8 @@ volatile float gAudioBuffer[BUFFER_SIZE] = {0};  //will contain correctly shifte
 const Uint32 gGarbage = 0x0BADFADE;
 volatile Uint16 gNoteDetected = 0;
 volatile Uint16 hwicount = 0;
-//volatile float hamming[BUFFER_SIZE];            //added hamming window vector
+Uint16 updateCycle  = 0; //changed to 1 when the pwm is to be altered
+Uint16 dutyCycle    = 0; //iterates to 256 writing to the registers
 
 RFFT_F32_STRUCT rfft;
 float RFFToutBuff[RFFT_SIZE];                   //Calculated FFT result
@@ -70,15 +77,18 @@ struct FLAGS_STRUCT
     enum SwapSignal{READY, BLOCKED}BufferSwapSignal;
     enum NoteDetected{SILENCE, DETECTED}soundFlag;
     enum RepeatNote{NEW,SAME}noteFlag;
+    enum KnownNote{UNKNOWN,KNOWN}knownFlag;
 }gFlags;
 
-const Uint16 SongofTime[6] = {A5, D5, F5, A5, D5, F5};
-const Uint16 WindsRequiem[6] = {C6, D5, A5 , C6, D5, A5};
-const Uint16 SariasSong[6] = {F5, A5, B5 , F5, A5, B5};
-const Uint16 SongofStorms[6] = {D5, F5, D6 , D5, F5, D6};
-const Uint16 SongofPassing[6] = {A5, F5, D6 , A5, F5, D6};
+const Uint16 SongofTime[3] = {F5, D5, A5};
+const Uint16 WindsRequiem[3] = {A5, D5, C6};
+const Uint16 SariasSong[3] = {B5, A5, F5};
+const Uint16 SongofStorms[3] = {D6, F5, D5};
+const Uint16 SongofPassing[3] = {D6, F5, A5};
 
-volatile Uint16 noteBuffer[6]= {0};
+volatile Uint16 gNoteBuffer[3]= {0};
+
+float hamming[BUFFER_SIZE];
 
 /*
  *  ======= Function Prototypes =======
@@ -126,14 +136,14 @@ void BufferSwapTask(UArg a0, UArg a1)
         //pend on  semaphore post()
         Semaphore_pend(BufferSwapSemaphore, BIOS_WAIT_FOREVER);
 
-        System_printf("BufferSwapTask() running \n");
-        System_flush();
+        //System_printf("BufferSwapTask() running \n");
+        //System_flush();
 
         Hwi_disable();
 
         for(int i = 0; i < BUFFER_SIZE; i++)
             {
-                gAudioBuffer[i] = (float) ( (gRawADCBuffer[i] >> 2) & 0xFFFF); /** hamming[i];*/
+                gAudioBuffer[i] = (Uint16) ( ( (float) ( (gRawADCBuffer[i] >> 2) & 0xFFFF) ) ); /** hamming[i];*/
             }
 
         //TODO: Uncomment Hamming Window
@@ -189,14 +199,16 @@ void BufferProcessingTask(UArg a0, UArg a1)
    while(1)
    {
        Semaphore_pend(BufferProcessingSemaphore, BIOS_WAIT_FOREVER);
-       System_printf("BufferProcessingTask() running\n");
-       System_flush();
+       //System_printf("BufferProcessingTask() running\n");
+       //System_flush();
 
        RFFT_f32u(&rfft);                 //calculate rfft on unaligned data (CHECK FOR OPTIMIZATION USING ALIGHT RFFT FUNCTION)
        RFFT_f32_mag(&rfft);                 //calculate rfft
 
        fftMaxMagBin = 1;
        fftMaxMag = RFFTmagBuff[1];
+
+
 
        for(int i=2;i<RFFT_SIZE/2;i++)
        {
@@ -209,47 +221,74 @@ void BufferProcessingTask(UArg a0, UArg a1)
 
        fftMaxMagFreq =  F_PER_SAMPLE * (float)fftMaxMagBin; //Convert normalized digital frequency to analog frequency
 
-       //TODO: what happens if same note is played for a long time????
-       if(fftMaxMag > FFT_THRESHOLD && gFlags.soundFlag==SILENCE)
+       gFlags.soundFlag = SILENCE;
+
+      /* if(fftMaxMag > FFT_THRESHOLD) && gFlags.soundFlag == SILENCE)
        {
            gFlags.soundFlag = DETECTED;
            gFlags.noteFlag = NEW;
        }
-       else if(fftMaxMag > FFT_THRESHOLD && gFlags.soundFlag == DETECTED)
+       else*/ if(fftMaxMag > FFT_THRESHOLD)// && gFlags.soundFlag == DETECTED)
        {
-           if(fftMaxMagBin == noteBuffer[0])
+           if ( (fftMaxMagBin < (D5 + 2) ) && (fftMaxMagBin > (D5 - 2) ) )
+           {
+               fftMaxMagBin = D5;
+               gFlags.knownFlag = KNOWN;
+           }
+           else if ( (fftMaxMagBin < (F5 + 2) ) && (fftMaxMagBin > (F5 - 2) ) )
+           {
+               fftMaxMagBin = F5;
+               gFlags.knownFlag = KNOWN;
+           }
+           else if ( (fftMaxMagBin < (A5 + 2) ) && (fftMaxMagBin > (A5 - 2) ) )
+           {
+               fftMaxMagBin = A5;
+               gFlags.knownFlag = KNOWN;
+           }
+           else if ( (fftMaxMagBin < (B5 + 2) ) && (fftMaxMagBin > (B5 - 2) ) )
+           {
+               fftMaxMagBin = B5;
+               gFlags.knownFlag = KNOWN;
+           }
+           else if ( (fftMaxMagBin < (C6 + 2) ) && (fftMaxMagBin > (C6 - 2) ) )
+           {
+               fftMaxMagBin = C6;
+
+                gFlags.knownFlag = KNOWN;
+           }
+           else if ( (fftMaxMagBin < (D6 + 2) ) && (fftMaxMagBin > (D6 - 2) ) )
+           {
+               fftMaxMagBin = D6;
+               gFlags.knownFlag = KNOWN;
+           }
+
+           if(fftMaxMagBin == gNoteBuffer[0])
                gFlags.noteFlag = SAME;
            else
                gFlags.noteFlag = NEW;
 
-       }
-       else if(fftMaxMag < FFT_THRESHOLD )
-       {
-           LCD_clear();
-           sprintf(noteVal, " No Note");
-           LCD_string(noteVal);
-           gFlags.soundFlag = SILENCE;
+           gFlags.soundFlag = DETECTED;
+
        }
 
-       if(gFlags.noteFlag == NEW && gFlags.soundFlag == DETECTED)
+       if(gFlags.noteFlag == NEW && gFlags.knownFlag == KNOWN && gFlags.soundFlag == DETECTED)
        {
-           noteBuffer[5] = noteBuffer[4];
-           noteBuffer[4] = noteBuffer[3];
-           noteBuffer[3] = noteBuffer[2];
-           noteBuffer[2] = noteBuffer[1];
-           noteBuffer[1] = noteBuffer[0];
-           noteBuffer[0] = fftMaxMagBin;
-           sprintf(noteVal, "%10f", fftMaxMagFreq);
-           LCD_home();
-           LCD_string(noteVal);
-           LCD_pos(1, 0);
-           sprintf(noteVal, "%3u ,", fftMaxMagBin);
-           LCD_string(noteVal);
-           sprintf(noteVal, " %3f", fftMaxMag);
-           LCD_string(noteVal);
+           gNoteBuffer[2] = gNoteBuffer[1];
+           gNoteBuffer[1] = gNoteBuffer[0];
+           gNoteBuffer[0] = fftMaxMagBin;
+          // sprintf(noteVal, "%10f", fftMaxMagFreq);
+          // LCD_home();
+         // LCD_string(noteVal);
+         //  LCD_pos(1, 0);
+         //  sprintf(noteVal, "%3u ,", fftMaxMagBin);
+        //   LCD_string(noteVal);
+        //   sprintf(noteVal, " %3f", fftMaxMag);
+        //   LCD_string(noteVal);
 
            Semaphore_post(SongCompareSemaphore);
        }
+
+       gFlags.knownFlag = UNKNOWN;
 
        if ( gFlags.BufferSwapSignal == BLOCKED )
            gFlags.BufferSwapSignal = READY;
@@ -274,10 +313,73 @@ void SongCompareTask(UArg a0, UArg a1)
 
         System_flush();
 
+        //compare gNoteBuffer against all known songs
 
-        //TODO: Compare
+        if(memcmp( SongofTime, (const void *) gNoteBuffer , sizeof(SongofTime) ) == 0 )
+        {
+            System_printf("Song of Time found!\n");
+            System_flush();
+
+            //code to shut everything down
+
+            memset( (void *) gNoteBuffer, 0, sizeof(gNoteBuffer));
+        }
+        else if(memcmp( WindsRequiem, (const void *) gNoteBuffer , sizeof(WindsRequiem) ) == 0 )
+        {
+            System_printf("Winds Requiem found!\n");
+            System_flush();
+
+            //code to activate fan + read temp sensor
+
+            memset( (void *) gNoteBuffer, 0, sizeof(gNoteBuffer));
+        }
+        else if(memcmp( SariasSong, (const void *)  gNoteBuffer , sizeof(SariasSong) ) == 0 )
+        {
+            System_printf("Sarias Song found!\n");
+            System_flush();
+
+            System_printf("ADC RAW SAUCE %u \n",AdcRegs.ADCRESULT0);
+            System_printf("ADC RAW SAUCE2 %u \n",AdcRegs.ADCRESULT1);
 
 
+            if (AdcRegs.ADCRESULT0 > 2000) {
+
+                System_printf("ADC UPDATE %u \n",AdcRegs.ADCRESULT0);
+                System_flush();
+                HRPWM1_Config(10000,2);
+                // test the while loop for pwm
+
+                for(dutyCycle =1; dutyCycle<256; dutyCycle++) {
+                    EPwm1Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+                    EPwm2Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+
+                }
+            }
+
+
+            //code to open door and check mag sensor
+
+            memset( (void *) gNoteBuffer, 0, sizeof(gNoteBuffer));
+        }
+        else if(memcmp( SongofStorms, (const void *)  gNoteBuffer , sizeof(SongofStorms) ) == 0 )
+        {
+            System_printf("Song of Storms found!\n");
+            System_flush();
+
+            //code to water plants and check pressure sensor
+
+
+            memset( (void *) gNoteBuffer, 0, sizeof(gNoteBuffer));
+        }
+        else if(memcmp( SongofPassing, (const void *)  gNoteBuffer , sizeof(SongofPassing) ) == 0 )
+        {
+            System_printf("Song of Passing found!\n");
+            System_flush();
+
+            //code to toggle leds and check CdS cell
+
+            memset( (void *) gNoteBuffer, 0, sizeof(gNoteBuffer));
+        }
     }
 }
 
@@ -285,7 +387,7 @@ void SongCompareTask(UArg a0, UArg a1)
  *  ======== main ========
  */
 Int main()
-{ 
+{
     /*
      * use ROV->SysMin to view the characters in the circular buffer
      */
@@ -302,12 +404,12 @@ Int main()
 
     // Initialize External ADC via McBSPb
     Init_McBSPb_ADC();
-	
+
     System_printf("enter lcd init\n");
     System_flush();
 
     //Initialize LCD over I2C
-    Init_LCD();
+   // Init_LCD();
 
     System_printf("enter timer init\n");
     System_flush();
@@ -321,6 +423,33 @@ Int main()
     //Initialize Timer0
     Init_Timer0();
 
+    //Initialize ePWM1
+    InitEPwm1Gpio();
+    EALLOW;
+    SysCtrlRegs.PCLKCR1.bit.EPWM1ENCLK = 1;
+    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC  = 1;
+    //HRPWM1_Config(10000,2); // @params second val changes each time cycle is altered
+    EDIS;
+
+    System_printf("enter EPWM init\n");
+    System_flush();
+
+    //Initialize GPIO2 and GPIO3
+    EALLOW;
+    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 0;
+    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 0;
+    GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
+    EDIS;
+
+    System_printf("enter ADC init\n");
+    System_flush();
+
+    //Initialize internal ADC
+    internalADC_init();
+
+    System_printf("enter FFT init\n");
+    System_flush();
     //Init_FFT();
     rfft.FFTSize   = RFFT_SIZE;                     //Real FFT size
     rfft.FFTStages = RFFT_STAGES;                   //Real FFT stages

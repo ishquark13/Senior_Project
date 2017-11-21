@@ -27,54 +27,81 @@
 #include "../include/actuatorControl.h"
 #include "DSP2833x_EPwm_defines.h"
 
-int main(void) {
+
 	/*
 	 * remember to push the ePWM defines into the github fldr
 	 */
 
-	DisableDog();
-	InitPll(10,2);
-	InitSysCtrl();
 
-// using the EPWM module on GPIO 0 and GPIO 1
-	InitEPwm1Gpio();
-// disable CPU interrupts
-	DINT;
-// initialize the PIE vector table to default settings
-	InitPieCtrl();
-	IER = 0x0000;
-	IFR = 0x0000;
-//  populate table to all interrupts vectors
-	InitPieVectTable();
 // initialize the public variables
-	int updateCycle = 1;
-	int dutyCycle   = 0;
-	EALLOW;
-	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0; // sysclk /10 to pwm
-	EDIS;
 
 /*
  *  Enable the configuration for the PWM peripherals
  */
-	HRPWM1_Config(10000, 2); // duty cycle at 2 divides for 50%, 3 is 66%, 4 75% etc.. or float between 1-2 for inverted cycle
-	EALLOW;
-	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
-	EDIS;
+	void HRPWM1_Config( int period, float dutyDiv)
+	{
+	// ePWM1 register configuration with HRPWM
+	// ePWM1A toggle low/high with MEP control on Rising edge
+	    EALLOW;
+	    EPwm1Regs.TBCTL.bit.PRDLD = TB_IMMEDIATE;           // set Immediate load
+	    EPwm1Regs.TBPRD = period-1;                         // PWM frequency = 1 / period
+	    EPwm1Regs.CMPA.half.CMPA = period / dutyDiv;            // set duty 50% initially
+	    EPwm1Regs.CMPA.half.CMPAHR = (1 << 8);              // initialize HRPWM extension
+	    EPwm1Regs.CMPB = period / dutyDiv;                      // set duty 50% initially
+	    EPwm1Regs.TBPHS.all = 0;
+	    EPwm1Regs.TBCTR = 0;
 
-	while (updateCycle ==1)
-	   {
-	        for(dutyCycle =1; dutyCycle <256 ;dutyCycle ++)
-	        {
-	            // Example, write to the HRPWM extension of CMPA
-	            EPwm1Regs.CMPA.half.CMPAHR = dutyCycle << 8;     // Left shift by 8 to write into MSB bits
-	            EPwm2Regs.CMPA.half.CMPAHR = dutyCycle << 8;     // Left shift by 8 to write into MSB bits
+	    EPwm1Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP;
+	    EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;             // EPWM1 is the Master
+	    EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_DISABLE;
+	    EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
+	    EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
-	            // Example, 32-bit write to CMPA:CMPAHR
-	            EPwm3Regs.CMPA.all = ((Uint32)EPwm3Regs.CMPA.half.CMPA << 16) + (dutyCycle << 8);
-	            EPwm4Regs.CMPA.all = ((Uint32)EPwm4Regs.CMPA.half.CMPA << 16) + (dutyCycle << 8);
+	    EPwm1Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
+	    EPwm1Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+	    EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+	    EPwm1Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
 
-	            DELAY_US(20000); // Dummy delay between MEP changes
-			}
-	   }
+	    EPwm1Regs.AQCTLA.bit.ZRO = AQ_CLEAR;                // PWM toggle low/high
+	    EPwm1Regs.AQCTLA.bit.CAU = AQ_SET;
+	    EPwm1Regs.AQCTLB.bit.ZRO = AQ_CLEAR;
+	    EPwm1Regs.AQCTLB.bit.CBU = AQ_SET;
+
+	    EALLOW;
+	    EPwm1Regs.HRCNFG.all = 0x0;
+	    EPwm1Regs.HRCNFG.bit.EDGMODE = HR_REP;              //MEP control on Rising edge
+	    EPwm1Regs.HRCNFG.bit.CTLMODE = HR_CMP;
+	    EPwm1Regs.HRCNFG.bit.HRLOAD  = HR_CTR_ZERO;
+	    EDIS;
+	}
+
+
+//	while (updateCycle ==1)
+//	   {
+//	        for(dutyCycle =1; dutyCycle <256 ;dutyCycle ++)
+//	        {
+//	            // Example, write to the HRPWM extension of CMPA
+//	            EPwm1Regs.CMPA.half.CMPAHR = dutyCycle << 8;     // Left shift by 8 to write into MSB bits
+//	            EPwm2Regs.CMPA.half.CMPAHR = dutyCycle << 8;     // Left shift by 8 to write into MSB bits
+//
+//	            // Example, 32-bit write to CMPA:CMPAHR
+//	            EPwm3Regs.CMPA.all = ((Uint32)EPwm3Regs.CMPA.half.CMPA << 16) + (dutyCycle << 8);
+//	            EPwm4Regs.CMPA.all = ((Uint32)EPwm4Regs.CMPA.half.CMPA << 16) + (dutyCycle << 8);
+//
+//	            DELAY_US(20000); // Dummy delay between MEP changes
+//			}
+//	   }
+	void enableGpio(void) {
+
+	    EALLOW;
+	    GpioCtrlRegs.GPAPUD.bit.GPIO0 = 1;
+	    GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 0;
+	    GpioCtrlRegs.GPADIR.bit.GPIO0 = 1;
+	    GpioDataRegs.GPADAT.bit.GPIO0 = 1;
+	    GpioCtrlRegs.GPAPUD.bit.GPIO1 = 1;
+	    GpioCtrlRegs.GPAMUX1.bit.GPIO1 = 0;
+	    GpioCtrlRegs.GPADIR.bit.GPIO1 = 1;
+	    GpioDataRegs.GPADAT.bit.GPIO1 = 1;
+	    EDIS;
 	}
 

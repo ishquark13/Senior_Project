@@ -11,7 +11,9 @@ C_SRCS += \
 ../EEL4511\ Libraries/src/EEL4511_LCD.c \
 ../EEL4511\ Libraries/src/EEL4511_MISC.c \
 ../EEL4511\ Libraries/src/EEL4511_SRAM.c \
-../EEL4511\ Libraries/src/OneToOneI2CDriver.c 
+../EEL4511\ Libraries/src/OneToOneI2CDriver.c \
+../EEL4511\ Libraries/src/USARTinit.c \
+../EEL4511\ Libraries/src/actuatorControl.c 
 
 OBJS += \
 ./EEL4511\ Libraries/src/EEL4511_ADC.obj \
@@ -21,7 +23,9 @@ OBJS += \
 ./EEL4511\ Libraries/src/EEL4511_LCD.obj \
 ./EEL4511\ Libraries/src/EEL4511_MISC.obj \
 ./EEL4511\ Libraries/src/EEL4511_SRAM.obj \
-./EEL4511\ Libraries/src/OneToOneI2CDriver.obj 
+./EEL4511\ Libraries/src/OneToOneI2CDriver.obj \
+./EEL4511\ Libraries/src/USARTinit.obj \
+./EEL4511\ Libraries/src/actuatorControl.obj 
 
 C_DEPS += \
 ./EEL4511\ Libraries/src/EEL4511_ADC.d \
@@ -31,7 +35,9 @@ C_DEPS += \
 ./EEL4511\ Libraries/src/EEL4511_LCD.d \
 ./EEL4511\ Libraries/src/EEL4511_MISC.d \
 ./EEL4511\ Libraries/src/EEL4511_SRAM.d \
-./EEL4511\ Libraries/src/OneToOneI2CDriver.d 
+./EEL4511\ Libraries/src/OneToOneI2CDriver.d \
+./EEL4511\ Libraries/src/USARTinit.d \
+./EEL4511\ Libraries/src/actuatorControl.d 
 
 C_DEPS__QUOTED += \
 "EEL4511 Libraries\src\EEL4511_ADC.d" \
@@ -41,7 +47,9 @@ C_DEPS__QUOTED += \
 "EEL4511 Libraries\src\EEL4511_LCD.d" \
 "EEL4511 Libraries\src\EEL4511_MISC.d" \
 "EEL4511 Libraries\src\EEL4511_SRAM.d" \
-"EEL4511 Libraries\src\OneToOneI2CDriver.d" 
+"EEL4511 Libraries\src\OneToOneI2CDriver.d" \
+"EEL4511 Libraries\src\USARTinit.d" \
+"EEL4511 Libraries\src\actuatorControl.d" 
 
 OBJS__QUOTED += \
 "EEL4511 Libraries\src\EEL4511_ADC.obj" \
@@ -51,7 +59,9 @@ OBJS__QUOTED += \
 "EEL4511 Libraries\src\EEL4511_LCD.obj" \
 "EEL4511 Libraries\src\EEL4511_MISC.obj" \
 "EEL4511 Libraries\src\EEL4511_SRAM.obj" \
-"EEL4511 Libraries\src\OneToOneI2CDriver.obj" 
+"EEL4511 Libraries\src\OneToOneI2CDriver.obj" \
+"EEL4511 Libraries\src\USARTinit.obj" \
+"EEL4511 Libraries\src\actuatorControl.obj" 
 
 C_SRCS__QUOTED += \
 "../EEL4511 Libraries/src/EEL4511_ADC.c" \
@@ -61,6 +71,8 @@ C_SRCS__QUOTED += \
 "../EEL4511 Libraries/src/EEL4511_LCD.c" \
 "../EEL4511 Libraries/src/EEL4511_MISC.c" \
 "../EEL4511 Libraries/src/EEL4511_SRAM.c" \
-"../EEL4511 Libraries/src/OneToOneI2CDriver.c" 
+"../EEL4511 Libraries/src/OneToOneI2CDriver.c" \
+"../EEL4511 Libraries/src/USARTinit.c" \
+"../EEL4511 Libraries/src/actuatorControl.c" 
 
 

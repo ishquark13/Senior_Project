@@ -23,7 +23,7 @@
 //
 void InitAdc(void)
 {
-    extern void DSP28x_usDelay(Uint32 Count);
+    //extern void DSP28x_usDelay(Uint32 Count);
 
 
     // *IMPORTANT*
@@ -54,7 +54,10 @@ void InitAdc(void)
 	// contain the correct CPU clock period in nanoseconds.
 
     AdcRegs.ADCTRL3.all = 0x00E0;  // Power up bandgap/reference/ADC circuits
-    DELAY_US(ADC_usDELAY);         // Delay before converting ADC channels
+
+    for (int var = 0; var < 10000; ++var);
+
+    //DELAY_US(ADC_usDELAY);         // Delay before converting ADC channels
 }
 
 //===========================================================================

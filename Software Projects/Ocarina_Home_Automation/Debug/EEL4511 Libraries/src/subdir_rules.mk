@@ -59,4 +59,18 @@ EEL4511\ Libraries/src/OneToOneI2CDriver.obj: ../EEL4511\ Libraries/src/OneToOne
 	@echo 'Finished building: $<'
 	@echo ' '
 
+EEL4511\ Libraries/src/USARTinit.obj: ../EEL4511\ Libraries/src/USARTinit.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C2000 Compiler'
+	"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --include_path="C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --include_path="C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include" --include_path="C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include" --include_path="C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_headers/include" --advice:performance=all -g --c99 --display_error_number --diag_warning=225 --diag_warning=255 --diag_wrap=off --gen_func_subsections=on --printf_support=full --preproc_with_compile --preproc_dependency="EEL4511 Libraries/src/USARTinit.d" --obj_directory="EEL4511 Libraries/src" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+EEL4511\ Libraries/src/actuatorControl.obj: ../EEL4511\ Libraries/src/actuatorControl.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C2000 Compiler'
+	"C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --include_path="C:/ti/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --include_path="C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include" --include_path="C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include" --include_path="C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_headers/include" --advice:performance=all -g --c99 --display_error_number --diag_warning=225 --diag_warning=255 --diag_wrap=off --gen_func_subsections=on --printf_support=full --preproc_with_compile --preproc_dependency="EEL4511 Libraries/src/actuatorControl.d" --obj_directory="EEL4511 Libraries/src" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 
