@@ -51,13 +51,13 @@ void InitSci(void)
 
 void InitSciGpio()
 {
-   InitSciaGpio();
-#if DSP28_SCIB   
-   InitScibGpio();
-#endif // if DSP28_SCIB  
-#if DSP28_SCIC
+   //InitSciaGpio();
+//#if DSP28_SCIB
+//   InitScibGpio();
+//#endif // if DSP28_SCIB
+//#if DSP28_SCIC
    InitScicGpio();
-#endif // if DSP28_SCIC
+//#endif // if DSP28_SCIC
 }
 
 void InitSciaGpio()

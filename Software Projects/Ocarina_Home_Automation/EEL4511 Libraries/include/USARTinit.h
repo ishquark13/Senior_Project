@@ -9,7 +9,7 @@ void interruptInit();
 void timerInit();
 void outChar(char c);
 void outWord(char* word);
-
+void outPayload(char payload[], int len);
 void USARTinit();
 void USARTtest();
 void startUSART();

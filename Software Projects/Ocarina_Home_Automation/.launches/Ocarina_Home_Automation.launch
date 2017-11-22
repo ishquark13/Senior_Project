@@ -7,7 +7,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:Ocarina_Home_Automation}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Debug Probe/C28xx" value="C:/Users\Adrian\workspace_v6_2\Ocarina_Home_Automation\Debug\Ocarina_Home_Automation.out"/>
 <mapAttribute key="com.ti.ccstudio.debug.ui.displayFormats">
-<mapEntry key="Texas Instruments XDS100v2 USB Debug Probe/C28xx@##separator##@1" value="32-Bit Floating Point"/>
+<mapEntry key="Texas Instruments XDS100v2 USB Debug Probe/C28xx@##separator##@1" value="Character"/>
 </mapAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Ocarina_Home_Automation"/>

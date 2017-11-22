@@ -67,11 +67,17 @@ volatile Uint16 gNoteDetected = 0;
 volatile Uint16 hwicount = 0;
 Uint16 updateCycle  = 0; //changed to 1 when the pwm is to be altered
 Uint16 dutyCycle    = 0; //iterates to 256 writing to the registers
+float fanPwm = 1.5; // TODO: delete this and replace with global struct
 
 RFFT_F32_STRUCT rfft;
 float RFFToutBuff[RFFT_SIZE];                   //Calculated FFT result
 float RFFTF32Coef[RFFT_SIZE];                   //Coefficient table buffer
 float RFFTmagBuff[RFFT_SIZE/2+1];               //Magnitude of frequency spectrum
+
+/*
+ *  FLAGS_STRUCT: class that determines the status of the note detecion pattern/algorithm
+ *  with enum types od boolean flags
+ */
 struct FLAGS_STRUCT
 {
     enum SwapSignal{READY, BLOCKED}BufferSwapSignal;
@@ -79,6 +85,27 @@ struct FLAGS_STRUCT
     enum RepeatNote{NEW,SAME}noteFlag;
     enum KnownNote{UNKNOWN,KNOWN}knownFlag;
 }gFlags;
+
+/*
+ * TINGLES_MAP: struct to encompass the individual states of the sensors and actuators
+ */
+volatile struct TINGLES_MAP
+{
+    char packetStart[5];   //data initialization for the ESP wifi module
+    char noteFound;         //post to pi the current note
+    char songFound;         //post to pi the current song
+    Uint16 fanState;        //post to pi status of fan
+    float fanPwm;           //default begin duty-cycle
+    Uint16 fanPercent;      //post the calculated duty-cycle of the fan
+    Uint16 tempVal;         //ADCREG0 reading for the temp
+    char lightState;        //post to pi the status of the LEDs
+    Uint16 cdsVal;          //ADCREG1 reading for light
+    char pumpState;         //on or off for pump
+    Uint16 pressureVal;     //ADCREG2 for pressure sensor
+    char lockState;         //post to pi lock on or off
+    char magnetVal;         //ADCREG3 for magnet
+    char packetEnd[4] ;     //packet to end the socket cnxn
+}gTinglesMap;
 
 const Uint16 SongofTime[3] = {F5, D5, A5};
 const Uint16 WindsRequiem[3] = {A5, D5, C6};
@@ -96,7 +123,8 @@ float hamming[BUFFER_SIZE];
 
 void Init_Timer0(void);
 void Init_DMA(void);
-
+void Init_PWM(void);
+void waitAdc(void);
 
 /* ======= BufferSwapPostFxn_HWI ========
  * This Function Posts a Semaphore for the BufferSwapFxn_SWI to run
@@ -234,6 +262,15 @@ void BufferProcessingTask(UArg a0, UArg a1)
            {
                fftMaxMagBin = D5;
                gFlags.knownFlag = KNOWN;
+               fanPwm -= .1;
+               HRPWM1_Config(10000,fanPwm);
+              // test the while loop for pwm
+
+              for(dutyCycle =1; dutyCycle<256; dutyCycle++) {
+                  EPwm1Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+                  EPwm2Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+              }
+
            }
            else if ( (fftMaxMagBin < (F5 + 2) ) && (fftMaxMagBin > (F5 - 2) ) )
            {
@@ -249,17 +286,32 @@ void BufferProcessingTask(UArg a0, UArg a1)
            {
                fftMaxMagBin = B5;
                gFlags.knownFlag = KNOWN;
+
            }
            else if ( (fftMaxMagBin < (C6 + 2) ) && (fftMaxMagBin > (C6 - 2) ) )
            {
                fftMaxMagBin = C6;
 
                 gFlags.knownFlag = KNOWN;
+                fanPwm += .1;
+                HRPWM1_Config(10000,fanPwm);
+               // test the while loop for pwm
+
+               for(dutyCycle =1; dutyCycle<256; dutyCycle++) {
+                   EPwm1Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+                   EPwm2Regs.CMPA.half.CMPAHR = dutyCycle << 8;
+
+               }
            }
            else if ( (fftMaxMagBin < (D6 + 2) ) && (fftMaxMagBin > (D6 - 2) ) )
            {
                fftMaxMagBin = D6;
                gFlags.knownFlag = KNOWN;
+               waitAdc();
+               System_printf("ADC RAW SAUCE %u \n",AdcRegs.ADCRESULT0);
+               System_printf("ADC RAW SAUCE2 %u \n",AdcRegs.ADCRESULT2);
+               System_printf("ADC RAW SAUCE3 %u \n",AdcRegs.ADCRESULT4);
+               System_flush();
            }
 
            if(fftMaxMagBin == gNoteBuffer[0])
@@ -338,15 +390,17 @@ void SongCompareTask(UArg a0, UArg a1)
             System_printf("Sarias Song found!\n");
             System_flush();
 
-            System_printf("ADC RAW SAUCE %u \n",AdcRegs.ADCRESULT0);
-            System_printf("ADC RAW SAUCE2 %u \n",AdcRegs.ADCRESULT1);
+            System_printf("ADC RAW SAUCE %u \n",AdcRegs.ADCRESULT0 >> 4);
+            System_printf("ADC RAW SAUCE2 %u \n",AdcRegs.ADCRESULT1 >> 4);
+            System_printf("ADC RAW SAUCE3 %u \n",AdcRegs.ADCRESULT2 >>4);
+            System_flush();
+
 
 
             if (AdcRegs.ADCRESULT0 > 2000) {
 
-                System_printf("ADC UPDATE %u \n",AdcRegs.ADCRESULT0);
                 System_flush();
-                HRPWM1_Config(10000,2);
+                HRPWM1_Config(10000,fanPwm);
                 // test the while loop for pwm
 
                 for(dutyCycle =1; dutyCycle<256; dutyCycle++) {
@@ -405,42 +459,29 @@ Int main()
     // Initialize External ADC via McBSPb
     Init_McBSPb_ADC();
 
-    System_printf("enter lcd init\n");
-    System_flush();
+    //System_printf("enter lcd init\n");
+    //System_flush();
 
     //Initialize LCD over I2C
    // Init_LCD();
 
-    System_printf("enter timer init\n");
+    System_printf("enter DMA init\n");
     System_flush();
 
     //Initialize DMACH1&2
     Init_DMA();
 
-    System_printf("enter DMA init\n");
+    System_printf("enter timer init\n");
     System_flush();
 
     //Initialize Timer0
     Init_Timer0();
 
-    //Initialize ePWM1
-    InitEPwm1Gpio();
-    EALLOW;
-    SysCtrlRegs.PCLKCR1.bit.EPWM1ENCLK = 1;
-    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC  = 1;
-    //HRPWM1_Config(10000,2); // @params second val changes each time cycle is altered
-    EDIS;
-
     System_printf("enter EPWM init\n");
     System_flush();
 
-    //Initialize GPIO2 and GPIO3
-    EALLOW;
-    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 0;
-    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 0;
-    GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
-    EDIS;
+    //Initialize ePWM1
+    Init_PWM();
 
     System_printf("enter ADC init\n");
     System_flush();
@@ -448,9 +489,9 @@ Int main()
     //Initialize internal ADC
     internalADC_init();
 
-    System_printf("enter FFT init\n");
+    System_printf("Initialize variables\n");
     System_flush();
-    //Init_FFT();
+
     rfft.FFTSize   = RFFT_SIZE;                     //Real FFT size
     rfft.FFTStages = RFFT_STAGES;                   //Real FFT stages
     rfft.InBuf     = (float*)&gAudioBuffer[0];      //Input buffer
@@ -458,13 +499,30 @@ Int main()
     rfft.MagBuf    = &RFFTmagBuff[0];               //Magnitude output buffer
     rfft.CosSinBuf = &RFFTF32Coef[0];               //Twiddle factor
 
+    /*initialize TinglesMap
+    gTinglesMap.packetStart[0] = 0x01;
+    gTinglesMap.packetStart[1] = 0x02;
+    gTinglesMap.packetStart[2] = 0x03;
+    gTinglesMap.packetStart[3] = 0x04;
+    gTinglesMap.packetEnd[0]   = 0x05;
+    gTinglesMap.packetEnd[1]   = 0x06;
+    gTinglesMap.packetEnd[2]   = 0x07;
+    gTinglesMap.packetEnd[3]   = 0x08;*/
+    char * val = "start";
+    strcpy(&gTinglesMap.packetStart, val);
+    val = "stop";
+    strcpy(&gTinglesMap.packetEnd, val);
+
+    gFlags.BufferSwapSignal = READY;
+
     System_printf("Finished inits, entering BIOS_start()\n");
     System_flush();
 
     //Hwi_enableInterrupt(38); //Timer0 Overflow
     //Hwi_enableInterrupt(74); //McBSPb Recieve Interrupt
 
-    gFlags.BufferSwapSignal = READY;
+    System_printf("size of gTinklesMap = %d\n", sizeof(gTinglesMap));
+    System_flush();
 
 
     BIOS_start();    /* does not return */
@@ -542,3 +600,27 @@ void Init_DMA(void)
     StartDMACH2();
     //StartDMACH3();
 }
+
+void Init_PWM(void){
+    InitEPwm1Gpio();
+       EALLOW;
+       SysCtrlRegs.PCLKCR1.bit.EPWM1ENCLK = 1;
+       SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC  = 1;
+       //HRPWM1_Config(10000,2); // @params second val changes each time cycle is altered
+       EDIS;
+
+       //Initialize GPIO2 and GPIO3
+       EALLOW;
+       GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 0;
+       GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 0;
+       GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
+       GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
+       EDIS;
+
+}
+
+void waitAdc(void) {
+    AdcRegs.ADCTRL2.bit.SOC_SEQ1 = 1;
+    while(!AdcRegs.ADCST.bit.SEQ1_BSY);
+}
+

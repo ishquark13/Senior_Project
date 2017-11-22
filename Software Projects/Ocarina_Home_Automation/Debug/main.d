@@ -228,14 +228,15 @@ main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/
 main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_I2c_defines.h
 main.obj: C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_DefaultIsr.h
 main.obj: ../EEL4511\ Libraries/include/EEL4511.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_ADC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_CircBuff.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_DAC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_GPIO.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_LCD.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_MISC.h
-main.obj: ../EEL4511\ Libraries/include/../include/EEL4511_SRAM.h
-main.obj: ../EEL4511\ Libraries/include/../include/OneToOneI2CDriver.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_ADC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_CircBuff.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_DAC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_GPIO.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_LCD.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_MISC.h
+main.obj: ../EEL4511\ Libraries/include/EEL4511_SRAM.h
+main.obj: ../EEL4511\ Libraries/include/OneToOneI2CDriver.h
+main.obj: ../EEL4511\ Libraries/include/USARTinit.h
 main.obj: ../EEL4511\ Libraries/include/internalADC.h
 main.obj: ../EEL4511\ Libraries/include/actuatorControl.h
 main.obj: C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_rfft.h
@@ -470,14 +471,15 @@ C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_D
 C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_I2c_defines.h: 
 C:/ti/controlSUITE/device_support/f2833x/v141/DSP2833x_common/include/DSP2833x_DefaultIsr.h: 
 ../EEL4511\ Libraries/include/EEL4511.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_ADC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_CircBuff.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_DAC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_GPIO.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_LCD.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_MISC.h: 
-../EEL4511\ Libraries/include/../include/EEL4511_SRAM.h: 
-../EEL4511\ Libraries/include/../include/OneToOneI2CDriver.h: 
+../EEL4511\ Libraries/include/EEL4511_ADC.h: 
+../EEL4511\ Libraries/include/EEL4511_CircBuff.h: 
+../EEL4511\ Libraries/include/EEL4511_DAC.h: 
+../EEL4511\ Libraries/include/EEL4511_GPIO.h: 
+../EEL4511\ Libraries/include/EEL4511_LCD.h: 
+../EEL4511\ Libraries/include/EEL4511_MISC.h: 
+../EEL4511\ Libraries/include/EEL4511_SRAM.h: 
+../EEL4511\ Libraries/include/OneToOneI2CDriver.h: 
+../EEL4511\ Libraries/include/USARTinit.h: 
 ../EEL4511\ Libraries/include/internalADC.h: 
 ../EEL4511\ Libraries/include/actuatorControl.h: 
 C:/ti/controlSUITE/libs/dsp/FPU/v1_40_00_00/include/fpu_rfft.h: 
