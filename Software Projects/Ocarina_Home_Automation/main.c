@@ -76,7 +76,7 @@ float RFFTmagBuff[RFFT_SIZE/2+1];               //Magnitude of frequency spectru
 
 /*
  *  FLAGS_STRUCT: class that determines the status of the note detecion pattern/algorithm
- *  with enum types od boolean flags
+ *  with enum types of boolean flags
  */
 struct FLAGS_STRUCT
 {

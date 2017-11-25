@@ -10,18 +10,11 @@ CMD_SRCS += \
 CFG_SRCS += \
 ../app.cfg 
 
-ASM_SRCS += \
-../DSP2833x_CodeStartBranch.asm 
-
 C_SRCS += \
 ../main.c 
 
 OBJS += \
-./DSP2833x_CodeStartBranch.obj \
 ./main.obj 
-
-ASM_DEPS += \
-./DSP2833x_CodeStartBranch.d 
 
 C_DEPS += \
 ./main.d 
@@ -50,14 +43,7 @@ C_DEPS__QUOTED += \
 "main.d" 
 
 OBJS__QUOTED += \
-"DSP2833x_CodeStartBranch.obj" \
 "main.obj" 
-
-ASM_DEPS__QUOTED += \
-"DSP2833x_CodeStartBranch.d" 
-
-ASM_SRCS__QUOTED += \
-"../DSP2833x_CodeStartBranch.asm" 
 
 C_SRCS__QUOTED += \
 "../main.c" 

@@ -84,6 +84,7 @@
 /* Content from xdc.cfg (null): */
 
 /* Content from ti.catalog.c2800.init (ti/catalog/c2800/init/linkcmd.xdt): */
+-u _ti_catalog_c2800_init_Boot_entry
 
 /* Content from ti.platforms.tms320x28 (null): */
 
@@ -116,6 +117,7 @@ _xdc_runtime_Startup__RESETFXN__C = 1;
 
 SECTIONS
 {
+    .ti_catalog_c2800_init_begin: load > BEGIN
 
 
     xdc.meta: type = COPY

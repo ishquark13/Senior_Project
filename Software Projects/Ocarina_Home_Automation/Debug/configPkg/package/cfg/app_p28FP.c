@@ -1825,7 +1825,7 @@ xdc_Void ti_catalog_c2800_init_Boot_init()
 {
     ti_catalog_c2800_init_Boot_disableWatchdog();
     /* share function with 2802x_2803x_2806x ... */
-    ti_catalog_c2800_init_Boot_configurePll2802x(10, 3);
+    ti_catalog_c2800_init_Boot_configurePll2802x(10, 2);
 }
 
 /*
@@ -2458,7 +2458,7 @@ ti_sysbios_BIOS_Module_State__ ti_sysbios_BIOS_Module__state__V __attribute__ ((
 ti_sysbios_BIOS_Module_State__ ti_sysbios_BIOS_Module__state__V = {
     {
         (xdc_Bits32)0x0,  /* hi */
-        (xdc_Bits32)0x8f0d180,  /* lo */
+        (xdc_Bits32)0x47868c0,  /* lo */
     },  /* cpuFreq */
     (xdc_UInt)0x0,  /* rtsGateCount */
     ((xdc_IArg)(0x0)),  /* rtsGateKey */
@@ -2689,7 +2689,7 @@ asm("	.clink ");
 
 __FAR__ const CT__ti_sysbios_BIOS_cpuFreq ti_sysbios_BIOS_cpuFreq__C = {
     (xdc_Bits32)0x0,  /* hi */
-    (xdc_Bits32)0x8f0d180,  /* lo */
+    (xdc_Bits32)0x47868c0,  /* lo */
 };
 
 /* runtimeCreatesEnabled__C */
