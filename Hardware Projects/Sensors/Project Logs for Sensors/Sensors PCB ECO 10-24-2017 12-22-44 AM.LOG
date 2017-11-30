@@ -1,0 +1,106 @@
+Removed Pin From Net: NetName=NetCds_1 Pin=Cds-1
+Removed Pin From Net: NetName=NetR1\_1 Pin=R1\-1
+Removed Pin From Net: NetName=NetR1\_2 Pin=R1\-2
+Removed Pin From Net: NetName=NetCds_2 Pin=R2-2
+Removed Pin From Net: NetName=NetR1\_2 Pin=R3\-1
+Removed Pin From Net: NetName=NetCds_1 Pin=R3\-2
+Removed Member From Class: ClassName=Sensors Member=R3\
+Change Component Comment : Designator=R2 Old Comment=Res3 New Comment=Res2
+Change Component Designator: OldDesignator=R1\ NewDesignator=R1
+Added Component: Designator=DSP_INPP(HDR1X2)
+Added Component: Designator=DSP_IN(HDR1X2)
+Added Component: Designator=hdr2(HDR1X2)
+Added Component: Designator=hdr3(HDR1X2)
+Added Component: Designator=hdr(HDR1X2)
+Added Component: Designator=P1(HDR1X2)
+Added Component: Designator=P2(HDR1X2)
+Added Component: Designator=P3(HDR1X2)
+Added Component: Designator=POWER1(HDR1X2)
+Added Component: Designator=POWER2(HDR1X3)
+Added Component: Designator=POWER3(HDR1X2)
+Added Component: Designator=Pres(AXIAL-0.3)
+Added Component: Designator=Q1(TO-220AB)
+Added Component: Designator=Q2(TO-220AB)
+Added Component: Designator=Q3(TO-220AB)
+Added Component: Designator=R3(AXIAL-0.3)
+Added Component: Designator=Rbias2(AXIAL-0.3)
+Added Component: Designator=Rbias3(AXIAL-0.3)
+Added Component: Designator=Rbias(AXIAL-0.3)
+Added Component: Designator=TMP(AXIAL-0.3)
+Added Pin To Net: NetName=NetR1\_2 Pin=hdr3-2
+Added Pin To Net: NetName=NetCds_2 Pin=P1-1
+Added Pin To Net: NetName=NetCds_2 Pin=P1-2
+Added Pin To Net: NetName=NetR1\_1 Pin=P2-1
+Added Pin To Net: NetName=NetR1\_1 Pin=P2-2
+Added Pin To Net: NetName=NetCds_1 Pin=P3-1
+Added Pin To Net: NetName=NetCds_1 Pin=P3-2
+Added Pin To Net: NetName=NetCds_1 Pin=Pres-2
+Added Pin To Net: NetName=NetR1\_2 Pin=Q3-2
+Added Pin To Net: NetName=NetCds_2 Pin=R1-1
+Added Pin To Net: NetName=NetCds_1 Pin=R3-1
+Added Pin To Net: NetName=NetR1\_1 Pin=TMP-2
+Change Net Name : Old Net Name=NetCds_1 New Net Name=V1
+Change Net Name : Old Net Name=NetCds_2 New Net Name=V2
+Change Net Name : Old Net Name=NetR1\_1 New Net Name=V3
+Change Net Name : Old Net Name=NetR1\_2 New Net Name=Nethdr3_2
+Added Pin To Net: NetName=3.3VLT Pin=POWER1-1
+Added Pin To Net: NetName=3.3VLT Pin=R1-2
+Added Pin To Net: NetName=3.3VLT Pin=R2-2
+Added Net: Name=3.3VLT
+Added Pin To Net: NetName=3.3VPP Pin=R3-2
+Added Net: Name=3.3VPP
+Added Pin To Net: NetName=12VFL Pin=hdr2-1
+Added Pin To Net: NetName=12VFL Pin=hdr3-1
+Added Net: Name=12VFL
+Added Pin To Net: NetName=12VPP Pin=hdr-1
+Added Net: Name=12VPP
+Added Pin To Net: NetName=GNDLT Pin=Cds-1
+Added Pin To Net: NetName=GNDLT Pin=POWER1-2
+Added Pin To Net: NetName=GNDLT Pin=TMP-1
+Added Net: Name=GNDLT
+Added Pin To Net: NetName=GNDPP Pin=Pres-1
+Added Pin To Net: NetName=GNDPP Pin=Q1-3
+Added Pin To Net: NetName=GNDPP Pin=Rbias-1
+Added Net: Name=GNDPP
+Added Pin To Net: NetName=GND Pin=Q2-3
+Added Pin To Net: NetName=GND Pin=Q3-3
+Added Pin To Net: NetName=GND Pin=Rbias2-1
+Added Pin To Net: NetName=GND Pin=Rbias3-1
+Added Net: Name=GND
+Added Pin To Net: NetName=Nethdr2_2 Pin=hdr2-2
+Added Pin To Net: NetName=Nethdr2_2 Pin=Q2-2
+Added Net: Name=Nethdr2_2
+Added Pin To Net: NetName=Nethdr_2 Pin=hdr-2
+Added Pin To Net: NetName=Nethdr_2 Pin=Q1-2
+Added Net: Name=Nethdr_2
+Added Pin To Net: NetName=PWM_FAN Pin=DSP_IN-1
+Added Pin To Net: NetName=PWM_FAN Pin=Q2-1
+Added Pin To Net: NetName=PWM_FAN Pin=Rbias2-2
+Added Net: Name=PWM_FAN
+Added Pin To Net: NetName=PWM_LED Pin=DSP_IN-2
+Added Pin To Net: NetName=PWM_LED Pin=Q3-1
+Added Pin To Net: NetName=PWM_LED Pin=Rbias3-2
+Added Net: Name=PWM_LED
+Added Pin To Net: NetName=PWM_PUMP Pin=Q1-1
+Added Pin To Net: NetName=PWM_PUMP Pin=Rbias-2
+Added Net: Name=PWM_PUMP
+Added Member To Class: ClassName=Sensors Member=Component DSP_INPP Header 2
+Added Member To Class: ClassName=Sensors Member=Component DSP_IN Header 2
+Added Member To Class: ClassName=Sensors Member=Component hdr2 FAN
+Added Member To Class: ClassName=Sensors Member=Component hdr3 LED
+Added Member To Class: ClassName=Sensors Member=Component hdr PUMP
+Added Member To Class: ClassName=Sensors Member=Component P1 ADC_LIGHT
+Added Member To Class: ClassName=Sensors Member=Component P2 ADC_TEMP
+Added Member To Class: ClassName=Sensors Member=Component P3 ADC_PRESSURE
+Added Member To Class: ClassName=Sensors Member=Component POWER1 Header 2
+Added Member To Class: ClassName=Sensors Member=Component POWER2 Header 3
+Added Member To Class: ClassName=Sensors Member=Component POWER3 Header 2
+Added Member To Class: ClassName=Sensors Member=Component Pres Psens
+Added Member To Class: ClassName=Sensors Member=Component Q1 NMOS-2
+Added Member To Class: ClassName=Sensors Member=Component Q2 NMOS-2
+Added Member To Class: ClassName=Sensors Member=Component Q3 NMOS-2
+Added Member To Class: ClassName=Sensors Member=Component R3 Res2
+Added Member To Class: ClassName=Sensors Member=Component Rbias2 Res1
+Added Member To Class: ClassName=Sensors Member=Component Rbias3 Res1
+Added Member To Class: ClassName=Sensors Member=Component Rbias Res1
+Added Member To Class: ClassName=Sensors Member=Component TMP TR

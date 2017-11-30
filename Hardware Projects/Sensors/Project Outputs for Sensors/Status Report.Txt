@@ -1,0 +1,22 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [Sensors.PrjPcb]
+   Generated File[Sensors.GTL]
+   Generated File[Sensors.GBL]
+   Generated File[Sensors.GPB]
+   Generated File[Sensors.GPT]
+   Generated File[Sensors.GTO]
+   Generated File[Sensors.GTS]
+   Generated File[Sensors.GBS]
+   Generated File[Sensors.GKO]
+   Generated File[Sensors.GM13]
+   Generated File[Sensors.GM15]
+   Generated File[Sensors.RUL]
+   Generated File[Sensors.EXTREP]
+   Generated File[Sensors.REP]
+
+
+Files Generated   : 13
+Documents Printed : 0
+
+Finished Output Generation At 10:50:00 AM On 11/28/2017

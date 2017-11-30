@@ -1,0 +1,2 @@
+Added Pin To Net: NetName=PWM_PUMP Pin=DSP_INPP-1
+Added Pin To Net: NetName=GNDPP Pin=DSP_INPP-2

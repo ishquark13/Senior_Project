@@ -1,0 +1,2 @@
+Added Pin To Net: NetName=GND Pin=POWER3-1
+Change Net Name : Old Net Name=GND New Net Name=GNDFL

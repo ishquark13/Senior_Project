@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=12VPP Pin=POWER2-1
+Added Pin To Net: NetName=3.3VPP Pin=POWER2-2
+Added Pin To Net: NetName=GNDPP Pin=POWER2-3
+Added Room: Name=Sensors
