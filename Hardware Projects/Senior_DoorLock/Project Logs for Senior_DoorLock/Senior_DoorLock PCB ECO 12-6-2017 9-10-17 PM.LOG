@@ -1,0 +1,23 @@
+Removed Pin From Net: NetName=NetR1_2 Pin=U1-1
+Removed Pin From Net: NetName=NetR1_1 Pin=U1-3
+Removed Pin From Net: NetName=GND Pin=U1-4
+Removed Pin From Net: NetName=MagSense Pin=U1-5
+Removed Pin From Net: NetName=NetR2_1 Pin=U1-6
+Removed Pin From Net: NetName=NetR2_2 Pin=U1-7
+Removed Pin From Net: NetName=5.0V Pin=U1-8
+Removed Member From Class: ClassName=Senior_DoorLock Member=U1
+Added Component: Designator=AD22151(DIP-8)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NetR1_2 Pin=AD22151-1
+Added Pin To Net: NetName=NetR1_1 Pin=AD22151-3
+Added Pin To Net: NetName=GND Pin=AD22151-4
+Added Pin To Net: NetName=MagSense Pin=AD22151-5
+Added Pin To Net: NetName=NetR2_1 Pin=AD22151-6
+Added Pin To Net: NetName=NetR2_2 Pin=AD22151-7
+Added Pin To Net: NetName=5.0V Pin=AD22151-8
+Change Net Name : Old Net Name=NetR1_1 New Net Name=NetAD22151_3
+Change Net Name : Old Net Name=NetR1_2 New Net Name=NetAD22151_1
+Change Net Name : Old Net Name=NetR2_1 New Net Name=NetAD22151_6
+Change Net Name : Old Net Name=NetR2_2 New Net Name=NetAD22151_7
+Added Member To Class: ClassName=Senior_DoorLock Member=Component AD22151 AD22151 Breakout
+Added Room: Name=Senior_DoorLock
